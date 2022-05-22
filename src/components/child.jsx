@@ -4,7 +4,7 @@ import myContext from "../utils/createContext"; // 全局共享数据中间件
 import eventBus from "../utils/eventsBus";
 const child = (props) => {
   const { name, changeName } = props;
-  const { age, changeAge } = useContext(myContext);
+  const { options, age, changeAge, optionsDispatch } = useContext(myContext);
   // 修改名字, 调用useContext传入的方法修改最顶层的数据
   const modifyName = () => {
     changeName("AlanTao");
@@ -15,11 +15,12 @@ const child = (props) => {
   };
   // 监听变化
   useEffect(() => {
-    console.log("props==>child", props);
+    console.log("props==>child", props, options);
     console.log("监听变化-孙组件", name, age);
   });
   const emmitEvent = () => {
     eventBus.emit("sayHello", "-----兄弟, 点击时我传值过来了");
+    optionsDispatch({ type: "decrement" });
   };
   return (
     <div className="child">

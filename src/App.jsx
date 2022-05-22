@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import Child from "./components/child"; // 子组件
 import Child2 from "./components/child2"; // 子组件
 import myContext from "./utils/createContext"; // 全局共享数据中间件
 import "./App.css";
+import { optionsState, optionsReducer } from "./store/test";
+// https://sanonz.github.io/2020/state-management-and-performance-optimization-for-react-context-api-with-hooks/
 function App() {
+  const [options, optionsDispatch] = useReducer(optionsReducer, optionsState);
   // 名字
   const [name, setName] = useState("Aaln");
   // 年龄
@@ -28,8 +31,13 @@ function App() {
           value={{
             age,
             changeAge,
+            options,
+            optionsDispatch,
           }}
         >
+          Count: {options.count}
+          <button onClick={() => optionsDispatch({ type: "decrement" })}>减少</button>
+          <button onClick={() => optionsDispatch({ type: "increment" })}>增加</button>
           <Child name={name} changeName={changeName} />
           <Child2></Child2>
         </myContext.Provider>
