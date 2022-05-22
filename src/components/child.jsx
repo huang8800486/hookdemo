@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Son from "./son"; // 孙组件
 import myContext from "../utils/createContext"; // 全局共享数据中间件
+import eventBus from "../utils/eventsBus";
 const child = (props) => {
   const { name, changeName } = props;
   const { age, changeAge } = useContext(myContext);
@@ -17,6 +18,9 @@ const child = (props) => {
     console.log("props==>child", props);
     console.log("监听变化-孙组件", name, age);
   });
+  const emmitEvent = () => {
+    eventBus.emit("sayHello", "-----兄弟, 点击时我传值过来了");
+  };
   return (
     <div className="child">
       <h4>子组件一: </h4>
@@ -24,6 +28,7 @@ const child = (props) => {
       <p>父传给子代组件的age: {age}</p>
       <button onClick={modifyName}>修改父组件的name</button>
       <button onClick={modifyAge}>修改父组件的age</button>
+      <button onClick={emmitEvent}>传值给兄弟组件二</button>
       <Son name={name} />
     </div>
   );
