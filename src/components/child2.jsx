@@ -1,22 +1,22 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
-import eventBus from "../utils/eventsBus";
+import React, { useState, useEffect, useContext } from "react";
+import Context from "../utils/createContext"; // 全局共享数据中间件
+import { useStore } from "../store";
 const child = (props) => {
-  const [msg, setMsg] = useState("消息");
-  
-  const acceptParameters = useCallback((message) => {
-    console.log("接收兄弟组一传过来的", message);
-    setMsg(message);
-  }, []);
-  useEffect(() => {
-    eventBus.addListener("sayHello", acceptParameters);
-    return () => {
-      eventBus.removeListener("sayHello", acceptParameters);
-    };
-  }, [acceptParameters]);
+  const { state, dispatch } = useStore();
   return (
     <div className="child">
       <h4>子组件二: </h4>
-      <p>子组件一传过来的值: {msg}</p>
+      <h2>数字{state.count}</h2>
+      <h2>字名{state.name}</h2>
+      <button
+        onClick={() =>
+          dispatch({ type: "CHNAGENAME", data: { name: "Alan3", id: 3 } })
+        }
+      >
+        更改名字
+      </button>
+      <button onClick={() => dispatch({ type: "DECREMENT" })}>减少</button>
+      <button onClick={() => dispatch({ type: "INCREMENT" })}>增加</button>
     </div>
   );
 };

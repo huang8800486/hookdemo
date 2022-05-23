@@ -2,31 +2,30 @@ export default {
   state: {
     count: 0,
   },
-  reducer(state, action) {
-    switch (action.type) {
-      case "increment":
-        return { count: this.state.count + 1 };
-      case "decrement":
-        return { count: this.state.count - 1 };
-      default:
-        throw new Error();
+  reducer(state) {
+    return {
+      INCREMENT: this.increment(state),
+      DECREMENT: this.decrement(state),
+    };
+  },
+  increment(state) {
+    let value = state.count + 100;
+    if (value > 1000) {
+      value = 1000;
     }
+    return {
+      ...state,
+      count: value,
+    };
+  },
+  decrement(state) {
+    let value = state.count - 100;
+    if (value < 0) {
+      value = 0;
+    }
+    return {
+      ...state,
+      count: value,
+    };
   },
 };
-// const Context = createContext();
-
-// function useStore() {
-//   return useContext(Context);
-// }
-
-// function StoreProvider({ children }) {
-//   const [state, dispatch] = useReducer(reducer, initialState);
-
-//   return (
-//     <Context.Provider value={[state, dispatch]}>
-//       {children}
-//     </Context.Provider>
-//   );
-// }
-
-// export { useStore, StoreProvider };

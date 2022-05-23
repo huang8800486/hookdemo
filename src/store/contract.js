@@ -1,13 +1,18 @@
 export default {
   state: {
-    instance: null,
+    name: "Alan",
   },
   reducer(state, action) {
-    switch (action.type) {
-      case "instance":
-        return { instance: (state.instance = "12") };
-      default:
-        throw new Error();
-    }
+    return {
+      CHNAGENAME: this.changeName(state, action),
+    };
+  },
+  changeName(state, action) {
+    console.log("changeName", action);
+    let name = state.name === "Alan" ? "Tao" : "Alan";
+    return {
+      ...state,
+      name: action.data.name,
+    };
   },
 };
