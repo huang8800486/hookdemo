@@ -8,15 +8,15 @@ const child = (props) => {
       <h4>子组件二: </h4>
       <h2>数字{state.count}</h2>
       <h2>字名{state.name}</h2>
-      <button
-        onClick={() =>
-          dispatch({ type: "CHNAGENAME", data: { name: "Alan3", id: 3 } })
-        }
-      >
+      <button onClick={() => dispatch({ type: "CHNAGENAME", name: "Alan3" })}>
         更改名字
       </button>
-      <button onClick={() => dispatch({ type: "DECREMENT" })}>减少</button>
-      <button onClick={() => dispatch({ type: "INCREMENT" })}>增加</button>
+      <button onClick={() => dispatch({ type: "DECREMENT", name: "减少" })}>
+        减少
+      </button>
+      <button onClick={() => dispatch({ type: "INCREMENT", name: "增加" })}>
+        增加
+      </button>
     </div>
   );
 };

@@ -12,7 +12,7 @@ export default {
     let name = state.name === "Alan" ? "Tao" : "Alan";
     return {
       ...state,
-      name: action.data.name,
+      name: action.name,
     };
   },
 };
