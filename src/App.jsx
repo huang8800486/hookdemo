@@ -1,36 +1,26 @@
 import React, { useState, useEffect, useReducer } from "react";
-import Child from "./components/child"; // 子组件
-import Child2 from "./components/child2"; // 子组件
-import "./App.css";
-import Context from "./utils/createContext"; // 全局共享数据中间件
-import { StoreProvider } from "./store";
-function App() {
-  const [state, dispatch] = StoreProvider();
-  useEffect(() => {
-    console.log("useEffect", state.count);
-  }, [state.count]);
+import { useSelector, useDispatch } from "react-redux";
+import { decrement, increment } from "./store/counterSlice";
+export default function App() {
+  const count = useSelector((state) => state.counter.value);
+  const dispatch = useDispatch();
   return (
-    <Context.Provider value={{ state, dispatch }}>
-      <div className="App">
-        <div className="father">
-          <h2>数字{state.count}</h2>
-          <h2>字名{state.name}</h2>
-          <button
-            onClick={() => dispatch({ type: "CHNAGENAME", name: "Alan1" })}
-          >
-            更改名字
-          </button>
-          <button onClick={() => dispatch({ type: "DECREMENT", name: "减少" })}>
-            减少
-          </button>
-          <button onClick={() => dispatch({ type: "INCREMENT", name: "增加" })}>
-            增加
-          </button>
-          <Child />
-          <Child2 />
-        </div>
+    <div className="App">
+      <div className="father">
+        <button
+          aria-label="Increment value"
+          onClick={() => dispatch(increment())}
+        >
+          Increment
+        </button>
+        <span>{count}</span>
+        <button
+          aria-label="Decrement value"
+          onClick={() => dispatch(decrement())}
+        >
+          Decrement
+        </button>
       </div>
-    </Context.Provider>
+    </div>
   );
 }
-export default App;
